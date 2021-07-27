@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:my_notepad/db/database.dart';
+import 'package:my_notepad/model/note.dart';
 
 class InputNote extends StatefulWidget{
   _InputNoteState createState()=> _InputNoteState();
@@ -11,7 +13,20 @@ class _InputNoteState extends State<InputNote> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        actions: [
+          IconButton(
+            icon: Icon(Icons.check),
+            onPressed: () async {
+              await DatabaseProvider.db.addNote(new Note(
+                id: 2,
+                title: inputTitle.text,
+                note: inputDescription.text,
+              ));
+            },
+          )
+        ],
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
