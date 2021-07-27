@@ -4,9 +4,9 @@ class Note {
   String note;
 
   Note({
-    required this.id,
-    required this.title,
-    required this.note,
+    this.id,
+    this.title,
+    this.note,
   });
 
   factory Note.fromMap(Map<String, dynamic> json) => new Note(

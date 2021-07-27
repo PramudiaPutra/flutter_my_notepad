@@ -9,10 +9,13 @@ class DatabaseProvider {
   DatabaseProvider._();
 
   static final DatabaseProvider db = DatabaseProvider._();
-  Database? _database;
+  Database _database;
 
-  Future<Database> get database async =>
-      _database ??= await getDatabaseInstance();
+  Future<Database> get database async {
+    if (_database != null) return _database;
+    _database = await getDatabaseInstance();
+    return _database;
+  }
 
   Future<Database> getDatabaseInstance() async {
     Directory directory = await getApplicationDocumentsDirectory();
@@ -34,5 +37,12 @@ class DatabaseProvider {
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
     return data;
+  }
+
+  Future<List<Note>> getNotes() async {
+    final db = await database;
+    var response = await db.query('Notes');
+    List<Note> list = response.map((c) => Note.fromMap(c)).toList();
+    return list;
   }
 }

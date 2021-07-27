@@ -3,13 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:my_notepad/db/database.dart';
 import 'package:my_notepad/model/note.dart';
 
-class InputNote extends StatefulWidget{
-  _InputNoteState createState()=> _InputNoteState();
+class InputNote extends StatefulWidget {
+
+  _InputNoteState createState() => _InputNoteState();
 }
 
 class _InputNoteState extends State<InputNote> {
   var inputTitle = TextEditingController();
   var inputDescription = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,10 +21,10 @@ class _InputNoteState extends State<InputNote> {
             icon: Icon(Icons.check),
             onPressed: () async {
               await DatabaseProvider.db.addNote(new Note(
-                id: 2,
                 title: inputTitle.text,
                 note: inputDescription.text,
               ));
+              Navigator.pop(context);
             },
           )
         ],
@@ -42,12 +44,12 @@ class _InputNoteState extends State<InputNote> {
                 hintStyle: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
               ),
             ),
-            SizedBox(height: 10,),
+            SizedBox(
+              height: 10,
+            ),
             TextField(
               controller: inputDescription,
-              decoration: InputDecoration.collapsed(
-                hintText: 'note'
-              ),
+              decoration: InputDecoration.collapsed(hintText: 'note'),
               maxLines: null,
             ),
           ],
@@ -55,5 +57,4 @@ class _InputNoteState extends State<InputNote> {
       ),
     );
   }
-
 }
